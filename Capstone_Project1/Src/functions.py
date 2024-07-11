@@ -24,8 +24,24 @@ class OrangeHRM:
             return "Invalid credentials"
 
     @staticmethod
-    def add_employee(driver, locators):
+    def Login_test(driver, username, password, locators):
         WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, locators.USERNAME_INPUT))).send_keys(username)
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, locators.PASSWORD_INPUT))).send_keys(password)
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, locators.SUBMIT_BUTTON))).click()
+        try:
+            WebDriverWait(driver, 10).until(EC.url_contains("dashboard"))
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, locators.PROFILE_BUTTON))).click()
+            return "The user has logged in successfully"
+        except TimeoutException:
+            return "Invalid credentials"
+
+    @staticmethod
+    def add_employee(driver, locators):
+        WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.XPATH, locators.PIM_MODULE))).click()
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, locators.ADD_EMPLOYEE_BUTTON))).click()

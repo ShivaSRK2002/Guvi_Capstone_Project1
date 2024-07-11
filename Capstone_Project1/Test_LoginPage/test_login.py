@@ -4,15 +4,19 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-
+import sys
+from Capstone_Project1.Src.locators import LoginPageLocators
+from Capstone_Project1.Src.locators import PIMPageLocators
+from Capstone_Project1.Src.functions import OrangeHRM
 # Add the project source directory to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Import the necessary modules and classes from the project
-# from Src.functions import OrangeHRM
-# from Src.locators import LoginPageLocators, PIMPageLocators
-from Capstone_Project1.Src.functions import OrangeHRM
-from Capstone_Project1.Src.locators import LoginPageLocators, PIMPageLocators
+
+# from Capstone_Project1.Src.functions import OrangeHRM
+# from Capstone_Project1.Src.locators import LoginPageLocators, PIMPageLocators
+# from E:\Git\Guvi_Capstone_Project1\Capstone_Project1\Src
+# from ..Src.locators import LoginPageLocators, PIMPageLocators
+# from ..Src.functions import OrangeHRM
 
 
 @pytest.fixture(scope="class")
@@ -52,22 +56,17 @@ class TestOrangeHRM:
 
     def test_add_employee(self):
         self.driver.get(LoginPageLocators.LOGIN_URL)
-        OrangeHRM.login(self.driver, LoginPageLocators.VALID_USERNAME, LoginPageLocators.VALID_PASSWORD,
-                        LoginPageLocators)
+        OrangeHRM.Login_test(self.driver, LoginPageLocators.VALID_USERNAME, LoginPageLocators.VALID_PASSWORD, LoginPageLocators)
         result = OrangeHRM.add_employee(self.driver, PIMPageLocators)
         assert result == "Successfully Saved"
 
     def test_edit_employee(self):
         self.driver.get(LoginPageLocators.LOGIN_URL)
-        OrangeHRM.login(self.driver, LoginPageLocators.VALID_USERNAME, LoginPageLocators.VALID_PASSWORD,
-                        LoginPageLocators)
         result = OrangeHRM.edit_employee(self.driver, PIMPageLocators)
         assert result == "Successfully Updated"
 
     def test_delete_employee(self):
         self.driver.get(LoginPageLocators.LOGIN_URL)
-        OrangeHRM.login(self.driver, LoginPageLocators.VALID_USERNAME, LoginPageLocators.VALID_PASSWORD,
-                        LoginPageLocators)
         result = OrangeHRM.delete_employee(self.driver, PIMPageLocators)
         assert result == "Successfully Deleted"
 
